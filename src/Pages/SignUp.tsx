@@ -5,6 +5,27 @@ import imageSignup from '../images/signup.png'
 type Props = {}
 
 const SignUp = (props: Props) => {
+
+  interface User {
+    email:string;
+    nombre:string;
+    username:string;
+    password:string;
+    bio:string;
+  }
+  const user : User = {
+    email: '',
+    nombre: '',
+    username: '',
+    password: '',
+    bio: '',
+  }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    user[e.target.name as keyof typeof user] = e.target.value;
+    console.log(user)
+  }
+
   return (
     <Main center={true}>
       <div className="Signup">
@@ -21,6 +42,7 @@ const SignUp = (props: Props) => {
               placeholder="Email"
               className="Form__field"
               required
+              onChange={handleInputChange}
             />
             <input
               type="text"
@@ -30,6 +52,7 @@ const SignUp = (props: Props) => {
               required
               minLength={3}
               maxLength={100}
+              onChange={handleInputChange}
             />
             <input
               type="text"
@@ -39,6 +62,7 @@ const SignUp = (props: Props) => {
               required
               minLength={3}
               maxLength={30}
+              onChange={handleInputChange}
             />
             <input
               type="text"
@@ -47,6 +71,7 @@ const SignUp = (props: Props) => {
               className="Form__field"
               required
               maxLength={150}
+              onChange={handleInputChange}
             />
             <input
               type="password"
@@ -54,6 +79,7 @@ const SignUp = (props: Props) => {
               placeholder="Password"
               className="Form__field"
               required
+              onChange={handleInputChange}
             />
             <button className="Form__submit" type="submit">
               Sign up
