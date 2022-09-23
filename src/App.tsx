@@ -1,11 +1,14 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Nav from './Components/Nav';
+import SignUp from './Pages/SignUp';
 
 function App() {
   return (
-    <Nav />
+    <React.Fragment>
+      <Nav />
+      <SignUp />
+    </React.Fragment>
   );
 }
 

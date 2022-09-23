@@ -1,10 +1,11 @@
 import React from 'react'
+import Main from '../Components/layout/Main'
 
 type Props = {}
 
 const SignUp = (props: Props) => {
   return (
-    <div>SignUp</div>
+    <Main center={true}><div>SignUp</div></Main>
   )
 }
 
