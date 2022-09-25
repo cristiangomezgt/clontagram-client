@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Axios from "axios";
 import Main from "../Components/layout/Main";
 import imageSignup from "../images/signup.png";
 
@@ -20,7 +21,18 @@ const SignUp = (props: Props) => {
       [e.target.name]: e.target.value
     })
   };
+  
+   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
+    try {
+      const { data } = await Axios.post('/api/usuarios/signup', user);
+      console.log(data)
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <Main center={true}>
       <div className="Signup">
@@ -30,7 +42,7 @@ const SignUp = (props: Props) => {
           <p className="FormContainer__info">
             Sign up to see the Instagram clone
           </p>
-          <form>
+          <form onSubmit={handleSubmit}>
             <input
               type="email"
               name="email"
