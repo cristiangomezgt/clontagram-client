@@ -1,30 +1,25 @@
-import React from 'react'
-import Main from '../Components/layout/Main'
-import imageSignup from '../images/signup.png'
+import React, { useState } from "react";
+import Main from "../Components/layout/Main";
+import imageSignup from "../images/signup.png";
 
-type Props = {}
+type Props = {};
 
 const SignUp = (props: Props) => {
 
-  interface User {
-    email:string;
-    nombre:string;
-    username:string;
-    password:string;
-    bio:string;
-  }
-  const user : User = {
-    email: '',
-    nombre: '',
-    username: '',
-    password: '',
-    bio: '',
-  }
+  const [user, setUser] = useState({
+    email: "",
+    nombre: "",
+    username: "",
+    password: "",
+    bio: "",
+  });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    user[e.target.name as keyof typeof user] = e.target.value;
-    console.log(user)
-  }
+    setUser({
+      ...user,
+      [e.target.name]: e.target.value
+    })
+  };
 
   return (
     <Main center={true}>
@@ -43,6 +38,7 @@ const SignUp = (props: Props) => {
               className="Form__field"
               required
               onChange={handleInputChange}
+              value={user.email}
             />
             <input
               type="text"
@@ -53,6 +49,7 @@ const SignUp = (props: Props) => {
               minLength={3}
               maxLength={100}
               onChange={handleInputChange}
+              value={user.nombre}
             />
             <input
               type="text"
@@ -63,6 +60,7 @@ const SignUp = (props: Props) => {
               minLength={3}
               maxLength={30}
               onChange={handleInputChange}
+              value={user.username}
             />
             <input
               type="text"
@@ -72,6 +70,7 @@ const SignUp = (props: Props) => {
               required
               maxLength={150}
               onChange={handleInputChange}
+              value={user.bio}
             />
             <input
               type="password"
@@ -80,18 +79,19 @@ const SignUp = (props: Props) => {
               className="Form__field"
               required
               onChange={handleInputChange}
+              value={user.password}
             />
             <button className="Form__submit" type="submit">
               Sign up
             </button>
             <p className="FormContainer__info">
-            Do you already have an account? <a href="/login">Login</a>
+              Do you already have an account? <a href="/login">Login</a>
             </p>
           </form>
         </div>
       </div>
     </Main>
-  )
-}
+  );
+};
 
-export default SignUp
+export default SignUp;
