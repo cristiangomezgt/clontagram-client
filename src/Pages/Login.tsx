@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import Axios from "axios";
 import Main from "../Components/layout/Main";
 
-type Props = {}
+type Props = {
+  login: (email: string, password: string) => void;
+}
 
 const Login = (props: Props) => {
 
@@ -22,8 +24,7 @@ const Login = (props: Props) => {
     e.preventDefault();
 
     try {
-      const { data } = await Axios.post('/api/usuarios/login', user);
-      console.log(data)
+      props.login(user.email, user.password)
     }
     catch (error) {
       console.log(error);

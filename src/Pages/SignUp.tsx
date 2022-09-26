@@ -3,7 +3,16 @@ import Axios from "axios";
 import Main from "../Components/layout/Main";
 import imageSignup from "../images/signup.png";
 
-type Props = {};
+type Props = {
+  signup: (obj: 
+    {
+      email: string;
+      nombre: string;
+      username: string;
+      password: string;
+      bio: string;
+    }) => void;
+};
 
 const SignUp = (props: Props) => {
 
@@ -26,8 +35,7 @@ const SignUp = (props: Props) => {
     e.preventDefault();
 
     try {
-      const { data } = await Axios.post('/api/usuarios/signup', user);
-      console.log(data)
+      props.signup(user)
     }
     catch (error) {
       console.log(error);
