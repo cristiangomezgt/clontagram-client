@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
-import { setToken, deleteToken } from './Utils/auth-helpers';
+import { setToken, deleteToken, getToken, initAxiosInterceptors } from './Utils/auth-helpers';
 import Nav from './Components/Nav';
 import Login from './Pages/Login';
 import SignUp from './Pages/SignUp';
 
+initAxiosInterceptors();
 export interface User {
   email: string;
   nombre: string;
@@ -15,8 +16,8 @@ export interface User {
 
 function App() {
 
-  const [user, setUser] = useState(null)
-
+  const [user, setUser] = useState(null);
+  const [loadingUser, setLoadingUser] = useState<boolean>(true);
   const login = async (email: string, password: string) => {
     const { data } = await Axios.post('/api/usuarios/login', {
       email,
@@ -25,6 +26,23 @@ function App() {
     setUser(data.usuario);
     setToken(data.token)
   } 
+  useEffect(() => {
+    const fetchUser = async ()  => {
+      if(!getToken()) {
+        setLoadingUser(false);
+        return
+      }
+      try {
+        const {data: user} = await Axios.get('/api/usuarios/whoami');        
+        setUser(user);
+      } catch (error){
+        console.log(error);
+      }
+    }
+    fetchUser();
+    setLoadingUser(false);
+  }, []);
+  
   const signup = async (user: User) => {
     const { data } = await Axios.post('/api/usuarios/signup', user
     );
@@ -39,8 +57,8 @@ function App() {
   return (
     <React.Fragment>
       <Nav />
-      <SignUp signup={signup}/>
-      {/* <Login login={login} /> */}
+      {/* <SignUp signup={signup}/> */}
+      <Login login={login} />
       <p>{JSON.stringify(user)}</p>
     </React.Fragment>
   );
