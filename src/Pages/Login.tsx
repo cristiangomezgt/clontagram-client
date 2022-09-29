@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Axios from "axios";
 import Main from "../Components/layout/Main";
 
 type Props = {

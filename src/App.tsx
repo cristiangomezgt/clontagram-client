@@ -4,6 +4,8 @@ import { setToken, deleteToken, getToken, initAxiosInterceptors } from './Utils/
 import Nav from './Components/Nav';
 import Login from './Pages/Login';
 import SignUp from './Pages/SignUp';
+import Main from './Components/layout/Main';
+import Loading from './Components/Loading';
 
 initAxiosInterceptors();
 export interface User {
@@ -35,12 +37,12 @@ function App() {
       try {
         const {data: user} = await Axios.get('/api/usuarios/whoami');        
         setUser(user);
+        setLoadingUser(false);
       } catch (error){
         console.log(error);
       }
     }
     fetchUser();
-    setLoadingUser(false);
   }, []);
   
   const signup = async (user: User) => {
@@ -53,7 +55,13 @@ function App() {
     setUser(null);
     deleteToken();
   }
-
+  if(loadingUser) {
+    return (
+      <Main center={true}>
+        <Loading />
+      </Main>
+    )
+  }
   return (
     <React.Fragment>
       <Nav />
