@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Main from "../Components/layout/Main";
 import imageSignup from "../images/signup.png";
-
+import { Link } from "react-router-dom";
 type Props = {
   signup: (obj: 
     {
@@ -104,7 +104,7 @@ const SignUp = (props: Props) => {
               Sign up
             </button>
             <p className="FormContainer__info">
-              Do you already have an account? <a href="/login">Login</a>
+              Do you already have an account? <Link to="/login">Login</Link>
             </p>
           </form>
         </div>

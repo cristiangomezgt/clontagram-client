@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Main from "../Components/layout/Main";
-
+import { Link } from "react-router-dom"
 type Props = {
   login: (email: string, password: string) => void;
 }
@@ -58,7 +58,7 @@ const Login = (props: Props) => {
             Login
           </button>
           <p className="FormContainer__info">
-            You do not have an account? <a href="/signup">Signup</a>
+            You do not have an account? <Link to="/signup">Signup</Link>
           </p>
         </form>
       </div>
