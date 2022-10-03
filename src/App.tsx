@@ -11,7 +11,8 @@ import Login from "./Pages/Login";
 import SignUp from "./Pages/SignUp";
 import Main from "./Components/layout/Main";
 import Loading from "./Components/Loading";
-import { BrowserRouter, Routes, Route, Link, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import ProtectedRoute from "./Components/ProtectedRoute";
 
 initAxiosInterceptors();
 export interface User {
@@ -67,17 +68,19 @@ export default function App() {
     );
   }
   return (
-    <div>
+    <BrowserRouter>
       <Nav />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Navigate to="/signup" />}></Route>
-          <Route path="/login" element={<Login login={login} />} />
-          <Route path="/signup" element={<SignUp signup={signup} />} />
-          <Route path="*" element={<Navigate to="/signup" />}></Route>
-        </Routes>
-      </BrowserRouter>
-      <p>{JSON.stringify(user)}</p>
-    </div>
+      <Routes>
+        <Route path="/" element={<ProtectedRoute user={user!} />}>
+          <Route
+            index
+            element={<h1>Hola soy el componente feed temporáneo!</h1>}
+          />
+        </Route>
+        <Route path="/login" element={<Login login={login} />} />
+        <Route path="/signup" element={<SignUp signup={signup} />} />
+        <Route path="*" element={<Navigate to="/signup" />}></Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
