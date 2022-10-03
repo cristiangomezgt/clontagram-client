@@ -14,12 +14,15 @@ import Loading from "./Components/Loading";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import { IUser } from "./Types/user.type";
+import Error from "./Components/Error";
 
 initAxiosInterceptors();
 
 export default function App() {
   const [user, setUser] = useState<IUser | null>(null);
   const [loadingUser, setLoadingUser] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
   const login = async (email: string, password: string) => {
     const { data } = await Axios.post("/api/usuarios/login", {
       email,
@@ -28,6 +31,7 @@ export default function App() {
     setUser(data.usuario);
     setToken(data.token);
   };
+
   useEffect(() => {
     const fetchUser = async () => {
       if (!getToken()) {
@@ -50,10 +54,20 @@ export default function App() {
     setUser(data.usuario);
     setToken(data.token);
   };
+
   const logout = () => {
     setUser(null);
     deleteToken();
   };
+
+  const showError = (message: string) => {
+    setError(message);
+  };
+
+  const hideError = () => {
+    setError(null);
+  };
+
   if (loadingUser) {
     return (
       <Main center={true}>
@@ -64,8 +78,8 @@ export default function App() {
   return (
     <BrowserRouter>
       <Nav />
+      <Error message={error} hideError={hideError}></Error>
       <Routes>
-        {/* <Route path="/" element={<Navigate to="/signup" />}></Route> */}
         <Route path="/" element={<ProtectedRoute user={user!} />}>
           <Route
             index
