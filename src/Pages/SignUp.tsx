@@ -10,7 +10,8 @@ type Props = {
       username: string;
       password: string;
       bio: string;
-    }) => void;
+    }) => void,
+    showError: (message: string) => void
 };
 
 const SignUp = (props: Props) => {
@@ -34,10 +35,10 @@ const SignUp = (props: Props) => {
     e.preventDefault();
 
     try {
-      props.signup(user)
+      await props.signup(user)
     }
-    catch (error) {
-      console.log(error);
+    catch (error:any) {
+      props.showError(error?.response?.data?.message || error.response.data)
     }
   }
   return (

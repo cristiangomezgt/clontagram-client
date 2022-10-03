@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import Main from "../Components/layout/Main";
 import { Link } from "react-router-dom"
 type Props = {
-  login: (email: string, password: string) => void;
+  login: (email: string, password: string) => void,
+  showError: (message: string) => void
 }
 
 const Login = (props: Props) => {
@@ -23,10 +24,10 @@ const Login = (props: Props) => {
     e.preventDefault();
 
     try {
-      props.login(user.email, user.password)
+      await props.login(user.email, user.password);
     }
-    catch (error) {
-      console.log(error);
+    catch (error:any) {
+      props.showError(error?.response?.data?.message || error.response.data)
     }
   }
 

@@ -86,8 +86,8 @@ export default function App() {
             element={<h1>Hola soy el componente feed temporáneo!</h1>}
           />
         </Route>
-        <Route path="/login" element={<Login login={login} />} />
-        <Route path="/signup" element={<SignUp signup={signup} />} />
+        <Route path="/login" element={<Login login={login} showError={showError}/>} />
+        <Route path="/signup" element={<SignUp signup={signup} showError={showError}/>} />
         <Route path="*" element={<Navigate to="/signup" />}></Route>
       </Routes>
     </BrowserRouter>
