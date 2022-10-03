@@ -13,18 +13,12 @@ import Main from "./Components/layout/Main";
 import Loading from "./Components/Loading";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ProtectedRoute from "./Components/ProtectedRoute";
+import { IUser } from "./Types/user.type";
 
 initAxiosInterceptors();
-export interface User {
-  email: string;
-  nombre: string;
-  username: string;
-  password: string;
-  bio: string;
-}
 
 export default function App() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<IUser | null>(null);
   const [loadingUser, setLoadingUser] = useState<boolean>(true);
   const login = async (email: string, password: string) => {
     const { data } = await Axios.post("/api/usuarios/login", {
@@ -51,7 +45,7 @@ export default function App() {
     fetchUser();
   }, []);
 
-  const signup = async (user: User) => {
+  const signup = async (user: IUser) => {
     const { data } = await Axios.post("/api/usuarios/signup", user);
     setUser(data.usuario);
     setToken(data.token);
@@ -71,6 +65,7 @@ export default function App() {
     <BrowserRouter>
       <Nav />
       <Routes>
+        {/* <Route path="/" element={<Navigate to="/signup" />}></Route> */}
         <Route path="/" element={<ProtectedRoute user={user!} />}>
           <Route
             index
