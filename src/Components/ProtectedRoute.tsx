@@ -4,6 +4,7 @@ import { IUser } from '../Types/user.type';
 
 type Props = {
   user?: IUser,
+  showError: (message: string) => void
 }
 
 const ProtectedRoute = (props: Props) => {

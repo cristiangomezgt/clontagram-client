@@ -15,6 +15,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import { IUser } from "./Types/user.type";
 import Error from "./Components/Error";
+import Upload from "./Pages/Upload";
 
 initAxiosInterceptors();
 
@@ -77,13 +78,17 @@ export default function App() {
   }
   return (
     <BrowserRouter>
-      <Nav />
+      <Nav user={user!}/>
       <Error message={error} hideError={hideError}></Error>
       <Routes>
-        <Route path="/" element={<ProtectedRoute user={user!} />}>
+        <Route path="/" element={<ProtectedRoute user={user!} showError={showError} />}>
           <Route
             index
             element={<h1>Hola soy el componente feed temporáneo!</h1>}
+          />
+          <Route
+            path="/upload"
+            element={<Upload showError={showError} />}
           />
         </Route>
         <Route path="/login" element={<Login login={login} showError={showError}/>} />
