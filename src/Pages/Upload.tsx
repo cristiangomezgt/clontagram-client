@@ -13,6 +13,24 @@ const Upload = (props: Props) => {
   const [imageUrl, setImageUrl] = useState("");
   const [uploadingImage, setUploadingImage] = useState(false);
 
+  const handleOnChangeImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    try {
+      setUploadingImage(true);
+      const file =  e.target?.files![0];
+      const config = {
+        headers: {
+          'Content-Type': file.type
+        }
+      };
+      const {data} = await Axios.post("/api/posts/upload", file, config);
+      setImageUrl(data.url);
+      setUploadingImage(false);
+    } catch (error: any) {
+      setUploadingImage(false);
+      props.showError(error?.response?.data);
+    }
+  }
+
   return (
     <Main center>
       <div className="Upload">
@@ -21,6 +39,7 @@ const Upload = (props: Props) => {
             <UploadImageSection
               imageUrl={imageUrl}
               uploadingImage={uploadingImage}
+              handleOnChangeImage={handleOnChangeImage}
             />
           </div>
           <textarea
@@ -39,7 +58,13 @@ const Upload = (props: Props) => {
   );
 };
 
-const UploadImageSection = (props: any) => {
+type PropsUploadImageSection = {
+  imageUrl: string,
+  uploadingImage: boolean,
+  handleOnChangeImage: (e: React.ChangeEvent<HTMLInputElement>) => void,
+};
+
+const UploadImageSection = (props: PropsUploadImageSection) => {
   if (props.uploadingImage) {
     return <Loading />;
   } else if (props.imageUrl) {
@@ -49,7 +74,7 @@ const UploadImageSection = (props: any) => {
       <label className="Upload__image-label">
         <FontAwesomeIcon icon={faUpload}></FontAwesomeIcon>
         <span>Publish a photo</span>
-        <input type="file" className="hidden" name="image" />
+        <input type="file" className="hidden" name="image" onChange={props.handleOnChangeImage} />
       </label>
     );
   }
