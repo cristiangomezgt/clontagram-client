@@ -16,6 +16,7 @@ import ProtectedRoute from "./Components/ProtectedRoute";
 import { IUser } from "./Types/user.type";
 import Error from "./Components/Error";
 import Upload from "./Pages/Upload";
+import Feed from "./Pages/Feed";
 
 initAxiosInterceptors();
 
@@ -84,7 +85,7 @@ export default function App() {
         <Route path="/" element={<ProtectedRoute user={user!} showError={showError} />}>
           <Route
             index
-            element={<h1>Hola soy el componente feed temporáneo!</h1>}
+            element={<Feed showError={showError} />}
           />
           <Route
             path="/upload"
