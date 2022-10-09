@@ -3,6 +3,8 @@ import Axios from "axios";
 import Loading from "../Components/Loading";
 import Main from "../Components/layout/Main";
 import { NavLink } from "react-router-dom";
+import Post from "../Components/Post";
+import { IPost } from "../Types/post.type";
 
 const loadPosts = async (lastPost?: Date) => {
   const query = lastPost ? `?fecha=${lastPost}` : "";
@@ -15,7 +17,7 @@ type Props = {
 };
 
 const Feed = (props: Props) => {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState<IPost[]>([]);
   const [loadingPosts, setLoadingPosts] = useState(true);
 
   useEffect(() => {
@@ -48,7 +50,11 @@ const Feed = (props: Props) => {
   }
   return (
     <Main center>
-      <h1></h1>
+      <div className="Feed">
+        {
+          posts.map(post => (<Post key={post._id} post={post} />))
+        }
+      </div>
     </Main>
   );
 };
