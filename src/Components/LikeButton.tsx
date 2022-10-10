@@ -13,9 +13,9 @@ const LikeButton = (props: Props) => {
     <button onClick={props.onSubmitLike}>
         {
           props.like ? (
-            <FontAwesomeIcon className="text-red-dark" icon={heartRegular} />
+            <FontAwesomeIcon className="text-red-dark"  icon={heartSolid} />
           ) : (
-            <FontAwesomeIcon icon={heartSolid} />
+            <FontAwesomeIcon icon={heartRegular} />
           )
         }
     </button>
