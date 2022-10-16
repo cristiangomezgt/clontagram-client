@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { IComment } from "../Types/comment.type";
 import { IPost } from "../Types/post.type";
 import Avatar from "./Avatar";
+import Comment from "./Comment";
 import LikeButton from "./LikeButton";
 
 type Props = {
@@ -40,6 +41,7 @@ const Post = (props: Props) => {
           <Comments comments={props.post.comentarios!} />
         </ul>
       </div>
+      <Comment />
     </div>
   );
 };
