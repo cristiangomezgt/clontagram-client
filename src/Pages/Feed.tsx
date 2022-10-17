@@ -34,6 +34,18 @@ const Feed = (props: Props) => {
     loadInitializePosts();
   }, []);
 
+  const updatePost = (originalPost:IPost, updatedPost:IPost) => {
+    setPosts((posts) => {
+      const updatedPosts:IPost[] = posts.map(post => {
+        if(post !== originalPost) {
+          return post;
+        }
+        return updatedPost;
+      });
+      return updatedPosts;
+    })
+  }
+
   if (loadingPosts) {
     return (
       <Main center>
@@ -52,7 +64,7 @@ const Feed = (props: Props) => {
     <Main center>
       <div className="Feed">
         {
-          posts.map(post => (<Post key={post._id} post={post} />))
+          posts.map(post => (<Post key={post._id} post={post} updatePost={updatePost} showError={props.showError} />))
         }
       </div>
     </Main>

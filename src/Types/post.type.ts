@@ -7,7 +7,7 @@ export interface IPost {
   caption?: string,
   usuario?: IUser,
   estaLike: boolean,
-  numLikes: string,
+  numLikes: number,
   numComentarios: number,
   comentarios?: IComment[]
 }

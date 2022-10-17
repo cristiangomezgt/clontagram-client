@@ -1,16 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { IComment } from "../Types/comment.type";
 import { IPost } from "../Types/post.type";
+import { toggleLike } from "../Utils/post-helpers";
 import Avatar from "./Avatar";
 import Comment from "./Comment";
 import LikeButton from "./LikeButton";
 
 type Props = {
   post: IPost;
+  updatePost: (post: IPost, updatePost: IPost) => void;
+  showError: (message: string) => void;
 };
 
 const Post = (props: Props) => {
+  const [sendingLike, setSendingLike] = useState(false);
+
+  const onSubmitLike = async () => {
+    if (sendingLike) return;
+
+    try {
+      setSendingLike(true);
+      const updatedPost = await toggleLike(props.post);
+      props.updatePost(props.post, updatedPost);
+      setSendingLike(false);
+    } catch (error) {
+      setSendingLike(false);
+      props.showError("There was an error. try again please 😅");
+    }
+  };
+
   return (
     <div className="Post-Componente">
       <Avatar user={props.post.usuario!} />
@@ -22,7 +41,7 @@ const Post = (props: Props) => {
       <div className="Post-Componente__acciones">
         <div className="Post-Componente__like-container">
           <LikeButton
-            onSubmitLike={() => 1}
+            onSubmitLike={onSubmitLike}
             like={props.post.estaLike}
           ></LikeButton>
         </div>
