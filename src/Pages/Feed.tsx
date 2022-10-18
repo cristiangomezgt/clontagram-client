@@ -5,6 +5,7 @@ import Main from "../Components/layout/Main";
 import { NavLink } from "react-router-dom";
 import Post from "../Components/Post";
 import { IPost } from "../Types/post.type";
+import { IUser } from "../Types/user.type";
 
 const loadPosts = async (lastPost?: Date) => {
   const query = lastPost ? `?fecha=${lastPost}` : "";
@@ -13,7 +14,8 @@ const loadPosts = async (lastPost?: Date) => {
 };
 
 type Props = {
-  showError: (message: string) => void;
+  showError: (message: string) => void,
+  user: IUser
 };
 
 const Feed = (props: Props) => {
@@ -64,7 +66,7 @@ const Feed = (props: Props) => {
     <Main center>
       <div className="Feed">
         {
-          posts.map(post => (<Post key={post._id} post={post} updatePost={updatePost} showError={props.showError} />))
+          posts.map(post => (<Post key={post._id} post={post} updatePost={updatePost} showError={props.showError} user={props.user} />))
         }
       </div>
     </Main>

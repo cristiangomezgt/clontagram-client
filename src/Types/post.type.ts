@@ -9,5 +9,5 @@ export interface IPost {
   estaLike: boolean,
   numLikes: number,
   numComentarios: number,
-  comentarios?: IComment[]
+  comentarios: IComment[],
 }

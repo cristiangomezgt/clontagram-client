@@ -85,7 +85,7 @@ export default function App() {
         <Route path="/" element={<ProtectedRoute user={user!} showError={showError} />}>
           <Route
             index
-            element={<Feed showError={showError} />}
+            element={<Feed user={user!} showError={showError} />}
           />
           <Route
             path="/upload"

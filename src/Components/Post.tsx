@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { IComment } from "../Types/comment.type";
 import { IPost } from "../Types/post.type";
-import { toggleLike } from "../Utils/post-helpers";
+import { IUser } from "../Types/user.type";
+import { comment, toggleLike } from "../Utils/post-helpers";
 import Avatar from "./Avatar";
 import Comment from "./Comment";
 import LikeButton from "./LikeButton";
 
 type Props = {
+  user: IUser;
   post: IPost;
   updatePost: (post: IPost, updatePost: IPost) => void;
   showError: (message: string) => void;
@@ -29,7 +31,10 @@ const Post = (props: Props) => {
       props.showError("There was an error. try again please 😅");
     }
   };
-
+  const onSubmitComment = async (message:string) => {
+    const postUpdated = await comment(props.post, message, props.user);
+    props.updatePost(props.post, postUpdated)
+  }
   return (
     <div className="Post-Componente">
       <Avatar user={props.post.usuario!} />
@@ -60,7 +65,7 @@ const Post = (props: Props) => {
           <Comments comments={props.post.comentarios!} />
         </ul>
       </div>
-      <Comment />
+      <Comment post={props.post} onSubmitComment={onSubmitComment} showError={props.showError} />
     </div>
   );
 };
