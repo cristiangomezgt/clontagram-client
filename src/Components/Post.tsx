@@ -96,7 +96,7 @@ const Comments = (props: PropsComments) => {
         <li key={comment._id}>
           <NavLink to={`/profile/${comment.usuario?.username}`}>
             <b>{comment.usuario?.username}</b>
-          </NavLink>
+          </NavLink>{" "}
           {comment.mensaje}
         </li>
       ))}
