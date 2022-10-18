@@ -10,4 +10,5 @@ export interface IPost {
   numLikes: number,
   numComentarios: number,
   comentarios: IComment[],
+  fecha_creado: string
 }
