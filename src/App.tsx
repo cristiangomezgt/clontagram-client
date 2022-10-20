@@ -92,7 +92,7 @@ export default function App() {
             path="/upload"
             element={<Upload showError={showError} />}
           />
-          <Route path="/post/:postId" element={<Post showError={showError}/>} />
+          <Route path="/post/:postId" element={<Post user={user!} showError={showError}/>} />
         </Route>
         <Route path="/login" element={<Login login={login} showError={showError}/>} />
         <Route path="/signup" element={<SignUp signup={signup} showError={showError}/>} />

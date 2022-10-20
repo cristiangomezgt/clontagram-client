@@ -10,8 +10,10 @@ import NotFound from "../Components/NotFound";
 import { IComment } from "../Types/comment.type";
 import { IPost } from "../Types/post.type";
 import { IUser } from "../Types/user.type";
+import { comment, toggleLike } from "../Utils/post-helpers";
 
 type Props = {
+  user: IUser;
   showError: (message: string) => void;
 };
 
@@ -20,6 +22,7 @@ const Post = (props: Props) => {
   const [post, setPost] = useState<IPost | null>(null);
   const [loading, setLoading] = useState(true);
   const [postNotFound, setPostNotFound] = useState(false);
+  const [sendingLike, setSendingLike] = useState(false);
 
   useEffect(() => {
     const getPost = async () => {
@@ -41,6 +44,24 @@ const Post = (props: Props) => {
     };
     getPost();
   }, [postId]);
+
+  const onSubmitComment = async (message:string) => {
+    const postUpdated = await comment(post!, message, props.user);
+    setPost(postUpdated);
+  }
+  const onSubmitLike = async () => {
+    if (sendingLike) return;
+
+    try {
+      setSendingLike(true);
+      const updatedPost = await toggleLike(post!);
+      setPost(updatedPost);
+      setSendingLike(false);
+    } catch (error) {
+      setSendingLike(false);
+      props.showError("There was an error. try again please 😅");
+    }
+  };
 
   if (loading) {
     return (
@@ -74,9 +95,9 @@ const Post = (props: Props) => {
             />
           </div>
           <div className="Post__like">
-            <LikeButton like={post.estaLike} onSubmitLike={() => null} />
+            <LikeButton like={post.estaLike} onSubmitLike={onSubmitLike} />
           </div>
-          <Comment showError={props.showError} onSubmitComment={() => null} />
+          <Comment showError={props.showError} onSubmitComment={onSubmitComment} />
         </div>
       </div>
     </Main>
