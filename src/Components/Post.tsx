@@ -65,7 +65,7 @@ const Post = (props: Props) => {
           <Comments comments={props.post.comentarios!} />
         </ul>
       </div>
-      <Comment post={props.post} onSubmitComment={onSubmitComment} showError={props.showError} />
+      <Comment onSubmitComment={onSubmitComment} showError={props.showError} />
     </div>
   );
 };

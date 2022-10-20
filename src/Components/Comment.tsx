@@ -4,7 +4,6 @@ import { IUser } from "../Types/user.type";
 
 type Props = {
   // TODO:
-  post: IPost,
   onSubmitComment: (message:string) => void,
   showError: (message: string) => void,
 };
