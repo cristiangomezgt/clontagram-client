@@ -6,6 +6,7 @@ import { ImageAvatar } from "../Components/Avatar";
 import { IPost } from "../Types/post.type";
 import { IUser } from "../Types/user.type";
 import { NavLink } from "react-router-dom";
+import Grid from "../Components/Grid";
 
 type Props = {
   showError: (message: string) => void;
@@ -45,24 +46,32 @@ const Explore = (props: Props) => {
 
   return (
     <Main>
-      <div className="Explore__section">
-        <h2 className="Explore__title">
-          Discover users
-        </h2>
-        <div className="Explore__usuarios-container">
-          {
-            users.map((user) => (
-              <div className="Explore__usuario" key={user._id}>
-                <ImageAvatar user={user}  />
-                <p>{user.username}</p>
-                <NavLink to={`/profile/${user.username}`}>
-                  See profile
-                </NavLink>
-              </div>
-            ))
-          }
+      <React.Fragment>
+        <div className="Explore__section">
+          <h2 className="Explore__title">
+            Discover users
+          </h2>
+          <div className="Explore__usuarios-container">
+            {
+              users.map((user) => (
+                <div className="Explore__usuario" key={user._id}>
+                  <ImageAvatar user={user}  />
+                  <p>{user.username}</p>
+                  <NavLink to={`/profile/${user.username}`}>
+                    See profile
+                  </NavLink>
+                </div>
+              ))
+            }
+          </div>
         </div>
-      </div>
+        <div className="Explore__section">
+          <h2 className="Explore__title">
+            Explore
+          </h2>
+          <Grid posts={posts!} />
+        </div>
+      </React.Fragment>
     </Main>
   );
 };
