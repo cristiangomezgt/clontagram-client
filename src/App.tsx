@@ -18,6 +18,7 @@ import Error from "./Components/Error";
 import Upload from "./Pages/Upload";
 import Feed from "./Pages/Feed";
 import Post from "./Pages/Post";
+import Explore from "./Pages/Explore";
 
 initAxiosInterceptors();
 
@@ -92,7 +93,8 @@ export default function App() {
             path="/upload"
             element={<Upload showError={showError} />}
           />
-          <Route path="/post/:postId" element={<Post user={user!} showError={showError}/>} />
+          <Route path="/post/:postId" element={<Post user={user!} showError={showError} />} />
+          <Route path="/explore" element={<Explore showError={showError} />} />
         </Route>
         <Route path="/login" element={<Login login={login} showError={showError}/>} />
         <Route path="/signup" element={<SignUp signup={signup} showError={showError}/>} />
