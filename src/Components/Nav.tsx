@@ -1,6 +1,7 @@
 import React from 'react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCameraRetro } from "@fortawesome/free-solid-svg-icons";
+import { faCompass } from "@fortawesome/free-regular-svg-icons";
 import { IUser } from '../Types/user.type';
 import { NavLink } from 'react-router-dom';
 
@@ -29,6 +30,11 @@ const Nav = (props: Props) => {
       <li className='Nav__link-push'>
         <NavLink className='Nav__link' to="/upload">
           <FontAwesomeIcon icon={faCameraRetro}></FontAwesomeIcon>
+        </NavLink>
+      </li>
+      <li className='Nav__link-margin-left'>
+        <NavLink className='Nav__link' to="/explore">
+          <FontAwesomeIcon icon={faCompass}></FontAwesomeIcon>
         </NavLink>
       </li>
     </React.Fragment>
