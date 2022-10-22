@@ -2,6 +2,7 @@ import React from 'react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCameraRetro } from "@fortawesome/free-solid-svg-icons";
 import { faCompass } from "@fortawesome/free-regular-svg-icons";
+import { faUser } from "@fortawesome/free-regular-svg-icons";
 import { IUser } from '../Types/user.type';
 import { NavLink } from 'react-router-dom';
 
@@ -18,13 +19,15 @@ const Nav = (props: Props) => {
             Clontagram
           </NavLink>
         </li>
-        {props.user && <LoginRoutes /> }
+        {props.user && <LoginRoutes user={props.user} /> }
       </ul>
     </nav>
   )
 }
-
- const LoginRoutes = () => {
+type LoginRoutesProps = {
+  user: IUser
+}
+ const LoginRoutes = (props: LoginRoutesProps) => {
   return (
     <React.Fragment>
       <li className='Nav__link-push'>
@@ -35,6 +38,11 @@ const Nav = (props: Props) => {
       <li className='Nav__link-margin-left'>
         <NavLink className='Nav__link' to="/explore">
           <FontAwesomeIcon icon={faCompass}></FontAwesomeIcon>
+        </NavLink>
+      </li>
+      <li className='Nav__link-margin-left'>
+        <NavLink className='Nav__link' to={`/profile/${props.user.username}`}>
+          <FontAwesomeIcon icon={faUser}></FontAwesomeIcon>
         </NavLink>
       </li>
     </React.Fragment>
