@@ -5,5 +5,6 @@ export interface IUser {
   username?: string;
   password?: string;
   bio?: string;
-  imagen?: string
+  imagen?: string;
+  siguiendo?: boolean;
 }

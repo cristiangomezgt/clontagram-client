@@ -9,6 +9,7 @@ import stringToColor from "string-to-color";
 type Props = {
   showError: (message: string) => void;
   user: IUser;
+  logout: () => void;
 };
 
 const Profile = (props: Props) => {
@@ -50,24 +51,26 @@ const Profile = (props: Props) => {
     return props.user._id === userProfile?._id;
   };
 
-  const handleSelectedImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSelectedImage = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     try {
       setUploadingImage(true);
       const file = e.target?.files![0];
       const config = {
         headers: {
-          'Content-Type': file.type
-        }
-      }
-      const { data } = await axios.post('/api/usuarios/upload', file, config);
-      setUserProfile({...userProfile, imagen: data.url});
+          "Content-Type": file.type,
+        },
+      };
+      const { data } = await axios.post("/api/usuarios/upload", file, config);
+      setUserProfile({ ...userProfile, imagen: data.url });
       setUploadingImage(false);
     } catch (error: any) {
       console.log(error);
-      props.showError(error.response.data.message)
+      props.showError(error.response.data.message);
       setUploadingImage(false);
     }
-  }
+  };
   if (loading) {
     return (
       <Main center>
@@ -88,12 +91,30 @@ const Profile = (props: Props) => {
 
   return (
     <Main>
-      <ImageAvatarUploader
-        userProfile={userProfile}
-        isUserLogged={checkIfIsUserLogged()}
-        handleSelectedImage={handleSelectedImage}
-        uploadingImage={uploadingImage}
-      />
+      <div className="Perfil">
+        <ImageAvatarUploader
+          userProfile={userProfile}
+          isUserLogged={checkIfIsUserLogged()}
+          handleSelectedImage={handleSelectedImage}
+          uploadingImage={uploadingImage}
+        />
+        <div className="Perfil__bio-container">
+          <div className="Perfil__bio-heading">
+            <h2 className="capitalize">{userProfile.username}</h2>
+            {!checkIfIsUserLogged() && (
+              <FollowButton
+                isFollowing={userProfile.siguiendo!}
+                toggleFollow={() => null}
+              />
+            )}
+            {checkIfIsUserLogged() && (
+              <LogoutButton
+                logout={props.logout}
+              />
+            )}
+          </div>
+        </div>
+      </div>
     </Main>
   );
 };
@@ -144,6 +165,29 @@ const ImageAvatarUploader = (props: ImageAvatarUploaderProps) => {
   }
 
   return <div className="Perfil__img-container">{content}</div>;
+};
+
+type FollowButtonProps = {
+  isFollowing: boolean;
+  toggleFollow: () => void;
+};
+const FollowButton = (props: FollowButtonProps) => {
+  return (
+    <button className="Perfil__boton-seguir" onClick={props.toggleFollow}>
+      {props.isFollowing ? "Stop following" : "Follow"}
+    </button>
+  );
+};
+
+type LogoutProps = {
+  logout: () => void;
+};
+const LogoutButton = (props: LogoutProps) => {
+  return (
+    <button className="Perfil__boton-logout" onClick={props.logout}>
+      Logout
+    </button>
+  );
 };
 
 export default Profile;

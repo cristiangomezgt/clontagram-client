@@ -96,7 +96,7 @@ export default function App() {
           />
           <Route path="/post/:postId" element={<Post user={user!} showError={showError} />} />
           <Route path="/explore" element={<Explore showError={showError} />} />
-          <Route path="/profile/:username" element={<Profile user={user!} showError={showError} />} />
+          <Route path="/profile/:username" element={<Profile logout={logout} user={user!} showError={showError} />} />
         </Route>
         <Route path="/login" element={<Login login={login} showError={showError}/>} />
         <Route path="/signup" element={<SignUp signup={signup} showError={showError}/>} />
