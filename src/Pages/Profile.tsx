@@ -50,6 +50,24 @@ const Profile = (props: Props) => {
     return props.user._id === userProfile?._id;
   };
 
+  const handleSelectedImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    try {
+      setUploadingImage(true);
+      const file = e.target?.files![0];
+      const config = {
+        headers: {
+          'Content-Type': file.type
+        }
+      }
+      const { data } = await axios.post('/api/usuarios/upload', file, config);
+      setUserProfile({...userProfile, imagen: data.url});
+      setUploadingImage(false);
+    } catch (error: any) {
+      console.log(error);
+      props.showError(error.response.data.message)
+      setUploadingImage(false);
+    }
+  }
   if (loading) {
     return (
       <Main center>
@@ -69,11 +87,11 @@ const Profile = (props: Props) => {
   }
 
   return (
-    <Main center>
+    <Main>
       <ImageAvatarUploader
         userProfile={userProfile}
         isUserLogged={checkIfIsUserLogged()}
-        handleSelectedImage={() => null}
+        handleSelectedImage={handleSelectedImage}
         uploadingImage={uploadingImage}
       />
     </Main>
@@ -83,7 +101,7 @@ const Profile = (props: Props) => {
 type ImageAvatarUploaderProps = {
   isUserLogged: boolean;
   userProfile: IUser;
-  handleSelectedImage: () => void;
+  handleSelectedImage: (e: React.ChangeEvent<HTMLInputElement>) => void;
   uploadingImage: boolean;
 };
 
@@ -105,7 +123,7 @@ const ImageAvatarUploader = (props: ImageAvatarUploaderProps) => {
       >
         <input
           type="file"
-          onClick={props.handleSelectedImage}
+          onChange={props.handleSelectedImage}
           className="hidden"
           name="image"
         />
