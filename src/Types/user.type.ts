@@ -8,4 +8,5 @@ export interface IUser {
   imagen?: string;
   siguiendo?: boolean;
   numSeguidores?: number;
+  numSiguiendo?: number;
 }

@@ -85,7 +85,7 @@ const Profile = (props: Props) => {
       props.showError("Was an error to try to follow/unFollow this account.");
       setSendingFollowRequest(false);
     }
-  }
+  };
 
   if (loading) {
     return (
@@ -123,15 +123,30 @@ const Profile = (props: Props) => {
                 toggleFollow={onToggleFollow}
               />
             )}
-            {checkIfIsUserLogged() && (
-              <LogoutButton
-                logout={props.logout}
-              />
-            )}
+            {checkIfIsUserLogged() && <LogoutButton logout={props.logout} />}
           </div>
+          <DescriptionProfile user={userProfile} />
         </div>
       </div>
     </Main>
+  );
+};
+
+type DescriptionProfileProps = {
+  user: IUser;
+};
+const DescriptionProfile = (props: DescriptionProfileProps) => {
+  return (
+    <div className="Perfil__descripcion">
+      <h2 className="Perfil__nombre">{props.user.nombre}</h2>
+      <p>{props.user.bio}</p>
+      <p className="Perfil__estadisticas">
+        <b>{props.user.numSiguiendo}</b> following
+        <span className="ml-4">
+          <b>{props.user.numSeguidores}</b>
+        </span>
+      </p>
+    </div>
   );
 };
 
