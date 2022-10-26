@@ -6,6 +6,7 @@ import Loading from "../Components/Loading";
 import NotFound from "../Components/NotFound";
 import { IUser } from "../Types/user.type";
 import stringToColor from "string-to-color";
+import { toggleFollow } from "../Utils/followers-helpers";
 type Props = {
   showError: (message: string) => void;
   user: IUser;
@@ -20,6 +21,7 @@ const Profile = (props: Props) => {
   const [loading, setLoading] = useState(true);
   const [userNotFound, setUserNotFound] = useState(false);
   const [uploadingImage, setUploadingImage] = useState(false);
+  const [sendingFollowRequest, setSendingFollowRequest] = useState(false);
 
   useEffect(() => {
     const loadPostAndUser = async () => {
@@ -71,6 +73,20 @@ const Profile = (props: Props) => {
       setUploadingImage(false);
     }
   };
+
+  const onToggleFollow = async () => {
+    if (sendingFollowRequest) return;
+    try {
+      setSendingFollowRequest(true);
+      const updatedUser = await toggleFollow(userProfile!);
+      setUserProfile(updatedUser);
+      setSendingFollowRequest(false);
+    } catch (error) {
+      props.showError("Was an error to try to follow/unFollow this account.");
+      setSendingFollowRequest(false);
+    }
+  }
+
   if (loading) {
     return (
       <Main center>
@@ -104,7 +120,7 @@ const Profile = (props: Props) => {
             {!checkIfIsUserLogged() && (
               <FollowButton
                 isFollowing={userProfile.siguiendo!}
-                toggleFollow={() => null}
+                toggleFollow={onToggleFollow}
               />
             )}
             {checkIfIsUserLogged() && (
@@ -174,7 +190,7 @@ type FollowButtonProps = {
 const FollowButton = (props: FollowButtonProps) => {
   return (
     <button className="Perfil__boton-seguir" onClick={props.toggleFollow}>
-      {props.isFollowing ? "Stop following" : "Follow"}
+      {props.isFollowing ? "UnFollow" : "Follow"}
     </button>
   );
 };

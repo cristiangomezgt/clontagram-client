@@ -7,4 +7,5 @@ export interface IUser {
   bio?: string;
   imagen?: string;
   siguiendo?: boolean;
+  numSeguidores?: number;
 }
