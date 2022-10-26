@@ -7,6 +7,7 @@ import NotFound from "../Components/NotFound";
 import { IUser } from "../Types/user.type";
 import stringToColor from "string-to-color";
 import { toggleFollow } from "../Utils/followers-helpers";
+import useIsMobile from "../Hooks/useIsMobile";
 type Props = {
   showError: (message: string) => void;
   user: IUser;
@@ -22,6 +23,7 @@ const Profile = (props: Props) => {
   const [userNotFound, setUserNotFound] = useState(false);
   const [uploadingImage, setUploadingImage] = useState(false);
   const [sendingFollowRequest, setSendingFollowRequest] = useState(false);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const loadPostAndUser = async () => {
@@ -107,27 +109,30 @@ const Profile = (props: Props) => {
 
   return (
     <Main>
-      <div className="Perfil">
-        <ImageAvatarUploader
-          userProfile={userProfile}
-          isUserLogged={checkIfIsUserLogged()}
-          handleSelectedImage={handleSelectedImage}
-          uploadingImage={uploadingImage}
-        />
-        <div className="Perfil__bio-container">
-          <div className="Perfil__bio-heading">
-            <h2 className="capitalize">{userProfile.username}</h2>
-            {!checkIfIsUserLogged() && (
-              <FollowButton
-                isFollowing={userProfile.siguiendo!}
-                toggleFollow={onToggleFollow}
-              />
-            )}
-            {checkIfIsUserLogged() && <LogoutButton logout={props.logout} />}
+      <React.Fragment>
+        <div className="Perfil">
+          <ImageAvatarUploader
+            userProfile={userProfile}
+            isUserLogged={checkIfIsUserLogged()}
+            handleSelectedImage={handleSelectedImage}
+            uploadingImage={uploadingImage}
+          />
+          <div className="Perfil__bio-container">
+            <div className="Perfil__bio-heading">
+              <h2 className="capitalize">{userProfile.username}</h2>
+              {!checkIfIsUserLogged() && (
+                <FollowButton
+                  isFollowing={userProfile.siguiendo!}
+                  toggleFollow={onToggleFollow}
+                />
+              )}
+              {checkIfIsUserLogged() && <LogoutButton logout={props.logout} />}
+            </div>
+            { !isMobile && <DescriptionProfile user={userProfile} />}
           </div>
-          <DescriptionProfile user={userProfile} />
         </div>
-      </div>
+        { isMobile && <DescriptionProfile user={userProfile} />}
+      </React.Fragment>
     </Main>
   );
 };
