@@ -8,6 +8,7 @@ import { IUser } from "../Types/user.type";
 import stringToColor from "string-to-color";
 import { toggleFollow } from "../Utils/followers-helpers";
 import useIsMobile from "../Hooks/useIsMobile";
+import Grid from "../Components/Grid";
 type Props = {
   showError: (message: string) => void;
   user: IUser;
@@ -132,6 +133,8 @@ const Profile = (props: Props) => {
           </div>
         </div>
         { isMobile && <DescriptionProfile user={userProfile} />}
+        <div className="Perfil__separador"></div>
+        {posts.length > 0 ? <Grid posts={posts} /> : <NotPhotosFound />}
       </React.Fragment>
     </Main>
   );
@@ -225,5 +228,12 @@ const LogoutButton = (props: LogoutProps) => {
     </button>
   );
 };
+
+
+const NotPhotosFound = () => {
+  return (
+    <p className="text-center">This user has not posted photos</p>
+  )
+}
 
 export default Profile;
