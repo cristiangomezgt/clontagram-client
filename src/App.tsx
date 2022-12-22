@@ -30,7 +30,7 @@ export default function App() {
   const navigate = useNavigate();
 
   const login = async (email: string, password: string) => {
-    const { data } = await Axios.post("/api/usuarios/login", {
+    const { data } = await Axios.post(process.env.REACT_APP_API_URL+"/api/usuarios/login", {
       email,
       password,
     });
@@ -46,7 +46,7 @@ export default function App() {
         return;
       }
       try {
-        const { data: user } = await Axios.get("/api/usuarios/whoami");
+        const { data: user } = await Axios.get(process.env.REACT_APP_API_URL+"/api/usuarios/whoami");
         setUser(user);
         setLoadingUser(false);
       } catch (error) {
@@ -57,7 +57,7 @@ export default function App() {
   }, []);
 
   const signup = async (user: IUser) => {
-    const { data } = await Axios.post("/api/usuarios/signup", user);
+    const { data } = await Axios.post(process.env.REACT_APP_API_URL+"/api/usuarios/signup", user);
     setUser(data.usuario);
     setToken(data.token);
     navigate('/')
