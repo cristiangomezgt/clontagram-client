@@ -9,7 +9,7 @@ import { IUser } from "../Types/user.type";
 
 const loadPosts = async (lastPost?: string) => {
   const query = lastPost ? `?fecha=${lastPost}` : "";
-  const { data: newPosts } = await Axios.get(`/api/posts/feed${query}`);
+  const { data: newPosts } = await Axios.get(process.env.REACT_APP_API_URL+`/api/posts/feed${query}`);
   return newPosts;
 };
 

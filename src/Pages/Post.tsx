@@ -27,7 +27,7 @@ const Post = (props: Props) => {
   useEffect(() => {
     const getPost = async () => {
       try {
-        const { data: post } = await Axios.get(`/api/posts/${postId}`);
+        const { data: post } = await Axios.get(process.env.REACT_APP_API_URL+`/api/posts/${postId}`);
         setPost(post);
         setLoading(false);
       } catch (error: any) {

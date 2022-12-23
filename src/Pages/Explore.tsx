@@ -21,8 +21,8 @@ const Explore = (props: Props) => {
     const loadPost = async () => {
       try {
         const [posts, users] = await Promise.all([
-          Axios.get("/api/posts/explore").then(({ data }) => data),
-          Axios.get("/api/usuarios/explore").then(({ data }) => data),
+          Axios.get(process.env.REACT_APP_API_URL+"/api/posts/explore").then(({ data }) => data),
+          Axios.get(process.env.REACT_APP_API_URL+"/api/usuarios/explore").then(({ data }) => data),
         ]);
         setPosts(posts);
         setusers(users);

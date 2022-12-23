@@ -30,9 +30,9 @@ const Profile = (props: Props) => {
     const loadPostAndUser = async () => {
       try {
         setLoading(true);
-        const { data: user } = await axios.get(`/api/usuarios/${username}`);
+        const { data: user } = await axios.get(process.env.REACT_APP_API_URL+`/api/usuarios/${username}`);
         const { data: posts } = await axios.get(
-          `/api/posts/usuario/${user._id}`
+          process.env.REACT_APP_API_URL+`/api/posts/usuario/${user._id}`
         );
         setUserProfile(user);
         setPosts(posts);
@@ -67,7 +67,7 @@ const Profile = (props: Props) => {
           "Content-Type": file.type,
         },
       };
-      const { data } = await axios.post("/api/usuarios/upload", file, config);
+      const { data } = await axios.post(process.env.REACT_APP_API_URL+"/api/usuarios/upload", file, config);
       setUserProfile({ ...userProfile, imagen: data.url });
       setUploadingImage(false);
     } catch (error: any) {

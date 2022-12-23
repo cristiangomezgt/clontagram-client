@@ -26,7 +26,7 @@ const Upload = (props: Props) => {
           'Content-Type': file.type
         }
       };
-      const {data} = await Axios.post("/api/posts/upload", file, config);
+      const {data} = await Axios.post(process.env.REACT_APP_API_URL+"/api/posts/upload", file, config);
       setImageUrl(data.url);
       setUploadingImage(false);
     } catch (error: any) {
@@ -51,7 +51,7 @@ const Upload = (props: Props) => {
         caption,
         url: imageUrl
       };
-      await Axios.post("/api/posts", body);
+      await Axios.post(process.env.REACT_APP_API_URL+"/api/posts", body);
       setSendingPost(false);
       navigate('/');
     } catch (error: any) {

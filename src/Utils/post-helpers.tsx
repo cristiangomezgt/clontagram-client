@@ -3,7 +3,7 @@ import { IPost } from "../Types/post.type";
 import { IUser } from "../Types/user.type";
 
 export const toggleLike = async (post: IPost) => {
-  const url = `/api/posts/${post._id}/likes`;
+  const url = process.env.REACT_APP_API_URL+`/api/posts/${post._id}/likes`;
   let updatedPost;
   if (post.estaLike) {
     await axios.delete(url);
@@ -24,6 +24,7 @@ export const toggleLike = async (post: IPost) => {
 };
 export const comment = async (post: IPost, comment:string, user:IUser) => {
   const { data: newComment } = await axios.post(
+    process.env.REACT_APP_API_URL +
     `/api/posts/${post._id}/comentarios`, 
     { mensaje: comment}
   );
